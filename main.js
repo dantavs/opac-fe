@@ -27,5 +27,5 @@ async function getGameInfo(){
 async function startGame() {
     const apiReturn = await getGameInfo()
 
-    document.getElementById("gameInfo").innerHTML = apiReturn
+    document.getElementById("gameInfo").innerHTML = apiReturn.message
 }
