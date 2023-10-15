@@ -3,7 +3,7 @@ console.log(window.location.href)
 const devUrl = "localhost"
 const prodURL = ""
 
-const apiHost = "https://opac-9ey2.onrender.com"
+var apiHost = "https://opac-9ey2.onrender.com"
 
 const currentUrl = window.location.hostname
 
@@ -11,6 +11,7 @@ var urlText = "prod"
 
 if (currentUrl == devUrl){
     urlText = "Dev"
+    apiHost = "http://localhost:3333"
 }
 
 document.getElementById("url").innerHTML= urlText
@@ -29,3 +30,5 @@ async function startGame() {
 
     document.getElementById("gameInfo").innerHTML = apiReturn.message
 }
+
+startGame()
