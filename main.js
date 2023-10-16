@@ -42,27 +42,25 @@ async function getGameData(){
     return gameInfo
 }
 
-const gameButton = document.getElementById("gameButton")
+const gameButton = document.getElementById("btAction")
 
 gameButton.onclick = async function () {
     const gameData = await getGameData()
     
-    document.getElementById("gameData").innerHTML = gameData.playerA.name
-
     document.getElementById("playerAName").innerHTML = gameData.playerA.name
     document.getElementById("playerAHP").innerHTML = gameData.playerA.hp
-    document.getElementById("playerACardName").innerHTML = gameData.playerACard.name
-    document.getElementById("playerACardPower").innerHTML = gameData.playerACard.power
-    document.getElementById("playerACardImg").innerHTML = gameData.playerACard.img
+    //document.getElementById("playerACardName").innerHTML = gameData.playerACard.name
+    //document.getElementById("playerACardPower").innerHTML = gameData.playerACard.power
+    //document.getElementById("playerACardImg").innerHTML = gameData.playerACard.img
 
     document.getElementById("playerBName").innerHTML = gameData.playerB.name
     document.getElementById("playerBHP").innerHTML = gameData.playerB.hp
-    document.getElementById("playerBCardName").innerHTML = gameData.playerBCard.name
-    document.getElementById("playerBCardPower").innerHTML = gameData.playerBCard.power
-    document.getElementById("playerBCardImg").innerHTML = gameData.playerBCard.img
+    //document.getElementById("playerBCardName").innerHTML = gameData.playerBCard.name
+    //document.getElementById("playerBCardPower").innerHTML = gameData.playerBCard.power
+    //document.getElementById("playerBCardImg").innerHTML = gameData.playerBCard.img
 
-    const winnerPlayer = gameData.winner == "playerA" ? gameData.playerACard.name + " (" + gameData.playerA.name +")" : gameData.playerBCard.name + " (" + gameData.playerB.name +")"  
-    const winnerText = "Winner: " + winnerPlayer
-    document.getElementById("winner").innerHTML = winnerPlayer
+    //const winnerPlayer = gameData.winner == "playerA" ? gameData.playerACard.name + " (" + gameData.playerA.name +")" : gameData.playerBCard.name + " (" + gameData.playerB.name +")"  
+    //const winnerText = "Winner: " + winnerPlayer
+    //document.getElementById("winner").innerHTML = winnerPlayer
 
 }
