@@ -45,10 +45,24 @@ async function getGameData(){
 const gameButton = document.getElementById("gameButton")
 
 gameButton.onclick = async function () {
-    alert('gonna call')
     const gameData = await getGameData()
     
-    alert('after call')
     document.getElementById("gameData").innerHTML = gameData.playerA.name
+
+    document.getElementById("playerAName").innerHTML = gameData.playerA.name
+    document.getElementById("playerAHP").innerHTML = gameData.playerA.hp
+    document.getElementById("playerACardName").innerHTML = gameData.playerACard.name
+    document.getElementById("playerACardPower").innerHTML = gameData.playerACard.power
+    document.getElementById("playerACardImg").innerHTML = gameData.playerACard.img
+
+    document.getElementById("playerBName").innerHTML = gameData.playerB.name
+    document.getElementById("playerBHP").innerHTML = gameData.playerB.hp
+    document.getElementById("playerBCardName").innerHTML = gameData.playerBCard.name
+    document.getElementById("playerBCardPower").innerHTML = gameData.playerBCard.power
+    document.getElementById("playerBCardImg").innerHTML = gameData.playerBCard.img
+
+    const winnerPlayer = gameData.winner == "playerA" ? gameData.playerACard.name + " (" + gameData.playerA.name +")" : gameData.playerBCard.name + " (" + gameData.playerB.name +")"  
+    const winnerText = "Winner: " + winnerPlayer
+    document.getElementById("winner").innerHTML = winnerPlayer
 
 }
