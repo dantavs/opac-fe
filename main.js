@@ -28,7 +28,27 @@ async function getGameInfo(){
 async function startGame() {
     const apiReturn = await getGameInfo()
 
-    document.getElementById("gameInfo").innerHTML = apiReturn.message
+    document.getElementById("gameState").innerHTML = apiReturn.message
 }
 
 startGame()
+
+async function getGameData(){
+    const url = apiHost + "/onePieceGame"
+    const request = await fetch(url,{method:"GET"})
+
+    const gameInfo = await request.json()
+
+    return gameInfo
+}
+
+const gameButton = document.getElementById("gameButton")
+
+gameButton.onclick = async function () {
+    alert('gonna call')
+    const gameData = await getGameData()
+    
+    alert('after call')
+    document.getElementById("gameData").innerHTML = gameData.playerA.name
+
+}
