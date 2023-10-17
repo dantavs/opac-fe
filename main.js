@@ -29,6 +29,8 @@ async function startGame() {
     const apiReturn = await getGameInfo()
 
     document.getElementById("gameState").innerHTML = apiReturn.message
+    document.getElementById("playersInfo").style.display = "none"
+    document.getElementById("roundInfo").style.display = "none"
 }
 
 startGame()
@@ -63,4 +65,8 @@ gameButton.onclick = async function () {
     //const winnerText = "Winner: " + winnerPlayer
     //document.getElementById("winner").innerHTML = winnerPlayer
 
+    document.getElementById("playersInfo").style.display = "block"
+    document.getElementById("roundInfo").style.display = "block"
+
+    document.getElementById("btAction").innerHTML="Next round"
 }
