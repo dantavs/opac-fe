@@ -6,7 +6,7 @@ var envText = "prod"
 
 const currentUrl = window.location.hostname
 
-if (currentUrl == devUrl){
+if (currentUrl == devUrl || currentUrl == "127.0.0.1"){
     envText = "Dev"
     apiHost = "http://localhost:3333"
 }
@@ -44,19 +44,15 @@ async function getGameData(){
 
 async function nextRound(gameData){
     const url = apiHost + "/OPGNextRound"
-    const game = JSON.parse(gameData)
 
-    alert('vai chamar: ' + gameData)
     const request = await fetch(url,{
         method: "POST"
-        ,body: gameData
+        ,body: JSON.stringify(gameData)
     })
 
     const updatedGameData = await request.json()
 
-    alert('status code: ', JSON.stringify(updatedGameData))
-
-    return updateGameData
+    return updatedGameData
 }
 
 function updatePlayersData(gameData){
@@ -71,26 +67,24 @@ function updatePlayersData(gameData){
     return true
 }
 
-function updateGameData(game){
-    updatePlayersData(game)
+function updateGameData(gameData){
+    updatePlayersData(gameData)
 
-        document.getElementById("playerACardName").innerHTML = gameData.playerACard.name
-        document.getElementById("playerACardPower").innerHTML = gameData.playerACard.power
-        document.getElementById("playerACardImg").innerHTML = gameData.playerACard.img
-        
-        document.getElementById("playerBCardName").innerHTML = gameData.playerBCard.name
-        document.getElementById("playerBCardPower").innerHTML = gameData.playerBCard.power
-        document.getElementById("playerBCardImg").innerHTML = gameData.playerBCard.img
-        
-        const winnerPlayer = gameData.winner == "playerA" ? gameData.playerACard.name + " (" + gameData.playerA.name +")" : gameData.playerBCard.name + " (" + gameData.playerB.name +")"  
-        const winnerText = "Winner: " + winnerPlayer
-        document.getElementById("winner").innerHTML = winnerPlayer
-        
-        document.getElementById("roundInfo").style.display = "block"
-        
-        
+    document.getElementById("playerACardName").innerHTML = gameData.playerA.card.name
+    document.getElementById("playerACardPower").innerHTML = gameData.playerA.card.power
+    document.getElementById("playerACardImg").src = gameData.playerA.card.img
+    
+    document.getElementById("playerBCardName").innerHTML = gameData.playerB.card.name
+    document.getElementById("playerBCardPower").innerHTML = gameData.playerB.card.power
+    document.getElementById("playerBCardImg").src = gameData.playerB.card.img
+    
+    const winnerPlayer = gameData.winner == "playerA" ? gameData.playerA.card.name + " (" + gameData.playerA.name +")" : gameData.playerB.card.name + " (" + gameData.playerB.name +")"  
+    const winnerText = "Winner: " + winnerPlayer
+    document.getElementById("winner").innerHTML = winnerPlayer
+    
+    document.getElementById("roundInfo").style.display = "block"
 
-        return true
+    return game
 }
 
 const gameButton = document.getElementById("btAction")
@@ -106,7 +100,7 @@ gameButton.onclick = async function () {
     }else{   
         const gameData = await getGameData()
         updatePlayersData(gameData)
-        document.getElementById("gameData").innerHTML=JSON.stringify(gameData)
+        document.getElementById("gameData").innerHTML="JSON.stringify(gameData)"
         document.getElementById("gameState").innerHTML = "inProgress"
         document.getElementById("btAction").innerHTML="Next round"
     }
