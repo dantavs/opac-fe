@@ -52,6 +52,22 @@ async function nextRound(gameData){
 
     const updatedGameData = await request.json()
 
+    if( updatedGameData.winner === updatedGameData.playerA.name ){
+        const playerBHP = parseInt(document.getElementById("playerBHP").innerHTML) - 1
+        updatedGameData.playerB.hp = playerBHP
+        updatedGameData.playerA.hp = parseInt(document.getElementById("playerAHP").innerHTML)
+    }else{
+        const playerAHP = parseInt(document.getElementById("playerAHP").innerHTML) - 1
+        updatedGameData.playerA.hp = playerAHP
+        updatedGameData.playerB.hp = parseInt(document.getElementById("playerBHP").innerHTML)
+    }
+
+    if(updatedGameData.playerA.hp === 0 ||updatedGameData.playerB.hp === 0){
+        document.getElementById("gameState").innerHTML = "gameOver"
+        document.getElementById("btAction").innerHTML = "Start New Game!"
+        alert(updatedGameData.winner + " won!")
+    }
+
     return updatedGameData
 }
 
