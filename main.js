@@ -57,10 +57,14 @@ function checkRoundResult(power){
     if (cards[randomCard].power >= power){
         hp = parseInt(document.getElementById("playerAHPValue").innerHTML) - 1
         document.getElementById("playerAHPValue").innerHTML = hp
+        document.getElementById("playerAHPValue").style.color = "red"
+        document.getElementById("playerBHPValue").style.color = "black"
         winner = "Player B"
     }else{
         hp = parseInt(document.getElementById("playerBHPValue").innerHTML) - 1
         document.getElementById("playerBHPValue").innerHTML = hp
+        document.getElementById("playerBHPValue").style.color = "red"
+        document.getElementById("playerAHPValue").style.color = "black"
         winner = "Player A"
     }
 
