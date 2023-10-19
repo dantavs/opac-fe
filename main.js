@@ -1,38 +1,121 @@
-const devUrl = "localhost"
-const prodURL = ""
+const turnedCard = 
+`<img class="turnedCardImg" src="https://1757140519.rsc.cdn77.org/blog/wp-content/uploads/2022/07/One-Piece-Symbol.png">`
 
-var apiHost = "https://opac-9ey2.onrender.com"
-var envText = "prod"
+const cardsIds = [
+    "playerAActiveCard"
+    ,"playerBActiveCard"
+    ,"playerAHandCard1"
+    ,"playerAHandCard2"
+    ,"playerAHandCard3"
+    ,"playerAHandCard4"
+    ,"playerAHandCard5"
+    ,"playerBHandCard1"
+    ,"playerBHandCard2"
+    ,"playerBHandCard3"
+    ,"playerBHandCard4"
+    ,"playerBHandCard5"    
+]
 
-const currentUrl = window.location.hostname
+function setEnvironment(){
+    const devUrl = "localhost"
 
-if (currentUrl == devUrl || currentUrl == "127.0.0.1"){
-    envText = "Dev"
-    apiHost = "http://localhost:3333"
+    var apiHost = "https://opac-9ey2.onrender.com"
+    var envText = "prod"
+
+    const currentUrl = window.location.hostname
+
+    if (currentUrl == devUrl || currentUrl == "127.0.0.1"){
+        envText = "Dev"
+        apiHost = "http://localhost:3333"
+    }
+
+    return apiHost
 }
 
-document.getElementById("url").innerHTML= envText
-
-async function getGameInfo(){
-    const url = apiHost + "/getGameInfo"
-    const request = await fetch(url,{method:"GET"})
-
-    const gameInfo = await request.json()
-
-    return gameInfo
+for (let i=0;i<cardsIds.length;i++){
+    document.getElementById(cardsIds[i]).innerHTML = turnedCard    
 }
 
-async function startGame() {
-    const apiReturn = await getGameInfo()
-
-    document.getElementById("gameState").innerHTML = apiReturn.message
-    document.getElementById("playersInfo").style.display = "none"
-    document.getElementById("roundInfo").style.display = "none"
+function cardClick(){
+    alert('Card')
 }
 
-startGame()
+function checkRoundResult(power){
+    const cards = JSON.parse(document.getElementById("playerBCardsBuffer").innerHTML)
+    const randomCard = Math.floor(Math.random() * cards.length)
+
+    const playerBActiveCard = document.getElementById("playerBActiveCard")
+
+    playerBActiveCard.className = "faceCard"
+    playerBActiveCard.innerHTML = 
+    `<div>${cards[randomCard].name}</div>
+    <div class="cardImg"><img class="charImg" src=${cards[randomCard].img}></div>
+    <div id="playerBActiveCardPower">${cards[randomCard].power}</div>
+    `
+    
+    let hp, winner
+    if (cards[randomCard].power >= power){
+        hp = parseInt(document.getElementById("playerAHPValue").innerHTML) - 1
+        document.getElementById("playerAHPValue").innerHTML = hp
+        winner = "Player B"
+    }else{
+        hp = parseInt(document.getElementById("playerBHPValue").innerHTML) - 1
+        document.getElementById("playerBHPValue").innerHTML = hp
+        winner = "Player A"
+    }
+
+    if (hp === 0){
+        alert (winner + ' won!')
+        btAction.style.display = "block"
+        window.location.reload()
+    }
+    
+    
+        cards.splice(randomCard,1)
+        document.getElementById("playerBCardsBuffer").innerHTML = JSON.stringify(cards)
+}
+
+function buildHand(gameData){
+    const playerHandCards = [
+        "playerAHandCard1"
+        ,"playerAHandCard2"
+        ,"playerAHandCard3"
+        ,"playerAHandCard4"
+        ,"playerAHandCard5"
+    ]
+
+    document.getElementById("playerBCardsBuffer").innerHTML = JSON.stringify(gameData.deck.cards)
+
+    for (let i=0;i<playerHandCards.length;i++){
+
+        
+        const card = document.getElementById(playerHandCards[i]) 
+        card.className = "faceCard"
+        card.innerHTML = 
+        `<div>${gameData.deck.cards[i].name}</div>
+        <div class="cardImg"><img class="charImg" src=${gameData.deck.cards[i].img}></div>
+        <div id="playerAActiveCardPower">${gameData.deck.cards[i].power}</div>
+        `
+        
+        card.onclick = function () {
+            document.getElementById("playerAActiveCard").className = "faceCard"
+            document.getElementById("playerAActiveCard").innerHTML = document.getElementById(playerHandCards[i]).innerHTML
+            
+            document.getElementById(playerHandCards[i]).className = "playerCard"
+            document.getElementById(playerHandCards[i]).innerHTML = turnedCard
+            
+            const cardPower = parseInt(document.getElementById("playerAActiveCardPower").innerHTML)
+
+            checkRoundResult(cardPower)
+
+            card.onclick = ""
+        } 
+    }
+}
 
 async function getGameData(){
+    const apiHost = setEnvironment()
+    
     const url = apiHost + "/onePieceGame"
     const request = await fetch(url,{method:"GET"})
 
@@ -41,85 +124,10 @@ async function getGameData(){
     return gameInfo
 }
 
+const btAction = document.getElementById("btAction")
 
-async function nextRound(gameData){
-    const url = apiHost + "/OPGNextRound"
-
-    const request = await fetch(url,{
-        method: "POST"
-        ,body: JSON.stringify(gameData)
-    })
-
-    const updatedGameData = await request.json()
-
-    if( updatedGameData.winner === updatedGameData.playerA.name ){
-        const playerBHP = parseInt(document.getElementById("playerBHP").innerHTML) - 1
-        updatedGameData.playerB.hp = playerBHP
-        updatedGameData.playerA.hp = parseInt(document.getElementById("playerAHP").innerHTML)
-    }else{
-        const playerAHP = parseInt(document.getElementById("playerAHP").innerHTML) - 1
-        updatedGameData.playerA.hp = playerAHP
-        updatedGameData.playerB.hp = parseInt(document.getElementById("playerBHP").innerHTML)
-    }
-
-    if(updatedGameData.playerA.hp === 0 ||updatedGameData.playerB.hp === 0){
-        document.getElementById("gameState").innerHTML = "gameOver"
-        document.getElementById("btAction").innerHTML = "Start New Game!"
-        alert(updatedGameData.winner + " won!")
-    }
-
-    return updatedGameData
-}
-
-function updatePlayersData(gameData){
-    document.getElementById("playerAName").innerHTML = gameData.playerA.name
-    document.getElementById("playerAHP").innerHTML = gameData.playerA.hp
-
-    document.getElementById("playerBName").innerHTML = gameData.playerB.name
-    document.getElementById("playerBHP").innerHTML = gameData.playerB.hp
-
-    document.getElementById("playersInfo").style.display = "block"
-
-    return true
-}
-
-function updateGameData(gameData){
-    updatePlayersData(gameData)
-
-    document.getElementById("playerACardName").innerHTML = gameData.playerA.card.name
-    document.getElementById("playerACardPower").innerHTML = gameData.playerA.card.power
-    document.getElementById("playerACardImg").src = gameData.playerA.card.img
-    
-    document.getElementById("playerBCardName").innerHTML = gameData.playerB.card.name
-    document.getElementById("playerBCardPower").innerHTML = gameData.playerB.card.power
-    document.getElementById("playerBCardImg").src = gameData.playerB.card.img
-    
-    const winnerPlayer = gameData.winner == "playerA" ? gameData.playerA.card.name + " (" + gameData.playerA.name +")" : gameData.playerB.card.name + " (" + gameData.playerB.name +")"  
-    const winnerText = "Winner: " + winnerPlayer
-    document.getElementById("winner").innerHTML = winnerPlayer
-    
-    document.getElementById("roundInfo").style.display = "block"
-
-    return game
-}
-
-const gameButton = document.getElementById("btAction")
-
-gameButton.onclick = async function () {
-    const gameState = document.getElementById('gameState').innerHTML
-
-    if (gameState === "inProgress"){
-        const gameData = document.getElementById("gameData").innerHTML
-        const game = await nextRound(gameData)
-        const updatedGameData = updateGameData(game)
-        document.getElementById("gameData").innerHTML = updatedGameData
-    }else{   
-        const gameData = await getGameData()
-        updatePlayersData(gameData)
-        document.getElementById("gameData").innerHTML="JSON.stringify(gameData)"
-        document.getElementById("gameState").innerHTML = "inProgress"
-        document.getElementById("btAction").innerHTML="Next round"
-    }
-
-    return true
+btAction.onclick = async function () {
+    const gameData = await getGameData()
+    buildHand(gameData)
+    btAction.style.display = "none"
 }

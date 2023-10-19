@@ -1,64 +1,51 @@
 <html>
     <head>
-        <title>One Piece Awesome Cardgame</title>
         <link rel="stylesheet" href="main.css">
     </head>
     <body>
-        <h1 class="title">One Piece Awesome Cardgame</h1>
-        <span>Environment:</span>
-        <span id="url">urls</span><br>
-        <span>Game Status: </span>
-        <span id="gameState"></span><br><br>
-        <span id="gameData"></span>
-
-        <div id="gamepad">
-            <div id="playerACard" class="card">
-                <span id="playerACardName" class="cardName"></span>
-                <div class="cardImg">
-                    <img id="playerACardImg" class="charImg">
+        <span class="title">One Piece Awesome Cardgame</span>
+        <div class="gamePad">
+            <div class="playerPad">
+                <div class="playerInfo">
+                    <span class="playerName">Player Name</span>
+                    <div class="playerHP">
+                        <span class="playerHPText">HP: </span>
+                        <span class="playerHPValue" id="playerBHPValue">3</span>
+                    </div>
                 </div>
-                <div class="bottomLine">
-                    <img class="opLogo" src="https://e7.pngegg.com/pngimages/909/655/png-clipart-one-piece-logo-monkey-d-luffy-one-piece-usopp-logo-pirate-hat-manga-jolly-roger.png">
+                <div class="playerHand">
+                    <div class="playerCard" id="playerBHandCard1"></div>
+                    <div class="playerCard" id="playerBHandCard2"></div>
+                    <div class="playerCard" id="playerBHandCard3"></div>
+                    <div class="playerCard" id="playerBHandCard4"></div>
+                    <div class="playerCard" id="playerBHandCard5"></div>
                 </div>
-                <span id="playerACardPower" class="cardPower"></span>
+                <div class="playerActiveCard">
+                    <div class="playerCard" id="playerBActiveCard"></div>
+                </div>
             </div>
-            <div id="gameInfo">
-                <div class="playersInfo" id="playersInfo">
-                    <div id="playerA" class="playerInfo">
-                        <span id="playerAName" class="playerName"></span>
-                        <div class="playerHP">
-                            <span class="playerHPText">HP: </span>
-                            <span id="playerAHP" class="playerHPValue"></span>
-                        </div>
-                    </div>
-                    <div id="playerB" class="playerInfo">
-                        <span id="playerBName" class="playerName"></span>
-                        <div class="playerHP">
-                            <span class="playerHPText">HP: </span>
-                            <span id="playerBHP" class="playerHPValue"></span>
-                        </div>
-                    </div>
+            <div class="playerPad">
+                <div class="playerActiveCard">
+                    <div class="playerCard" id="playerAActiveCard"></div>
                 </div>
-                <div class="roundInfo" id="roundInfo">
-                    <span class="roundResults">Round Winner: </span>
-                    <span id="roundWinner"></span>
+                <div class="playerHand">                    
+                    <div class="playerCard" id="playerAHandCard1"></div>
+                    <div class="playerCard" id="playerAHandCard2"></div>
+                    <div class="playerCard" id="playerAHandCard3"></div>
+                    <div class="playerCard" id="playerAHandCard4"></div>
+                    <div class="playerCard" id="playerAHandCard5"></div>
                 </div>
-                <div class="gameActions">
+                <div class="playerInfo">
+                    <span class="playerName">Player Name</span>
                     <button id="btAction">Start Game!</button>
+                    <div class="playerHP">
+                        <span class="playerHPText">HP: </span>
+                        <span class="playerHPValue" id="playerAHPValue">3</span>
+                    </div>
                 </div>
-            </div>
-            <div id="plyearBCard" class="card">
-                <span id="playerBCardName" class="cardName"></span>
-                <div class="cardImg">
-                    <img id="playerBCardImg" class="charImg">
-                </div>
-                <div class="bottomLine">
-                    <img class="opLogo" src="https://e7.pngegg.com/pngimages/909/655/png-clipart-one-piece-logo-monkey-d-luffy-one-piece-usopp-logo-pirate-hat-manga-jolly-roger.png">
-                </div>
-                <span id="playerBCardPower" class="cardPower"></span>
             </div>
         </div>
-
+        <span id="playerBCardsBuffer"></span>
         <script src="main.js"></script>
     </body>
 </html>

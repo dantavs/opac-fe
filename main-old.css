@@ -1,0 +1,101 @@
+.title {
+    width: 100%;
+    text-align: center;
+}
+
+#gamepad{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    height: 600px;
+    background-color: rgb(21,2,93);
+    border: 12px;
+    border-color: rgb(224, 168, 64);
+    border-style:solid;
+    border-radius: 8px;
+}
+
+.cardName {
+    margin: 0 auto;
+    margin-top: 2rem;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.cardImg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    margin: 2rem auto;
+    height: 400px;
+    background-color: white;
+}
+
+.charImg {
+    max-height: 250px;
+    margin: 0 auto;
+}
+
+.cardPower {
+    text-align: right;
+    font-size: 2rem;
+    color: rgb(224, 168, 64);;
+}
+
+.opLogo {
+    width: 50px;
+    margin-left: 1.3rem;
+}
+
+.opImg {
+    width: 100%;
+}
+
+.bottomLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#gameInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 200px;
+    background-color: white;
+}
+
+.playersInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px;
+}
+
+.roundInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.gameActions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#gameData {
+    display: none;
+}

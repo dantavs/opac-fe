@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>One Piece Awesome Cardgame</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <h1 class="title">One Piece Awesome Cardgame</h1>
+        <span>Environment:</span>
+        <span id="url">urls</span><br>
+        <span>Game Status: </span>
+        <span id="gameState"></span><br><br>
+        <span id="gameData"></span>
+
+        <div id="gamepad">
+            <div id="playerACard" class="card">
+                <span id="playerACardName" class="cardName"></span>
+                <div class="cardImg">
+                    <img id="playerACardImg" class="charImg">
+                </div>
+                <div class="bottomLine">
+                    <img class="opLogo" src="https://e7.pngegg.com/pngimages/909/655/png-clipart-one-piece-logo-monkey-d-luffy-one-piece-usopp-logo-pirate-hat-manga-jolly-roger.png">
+                </div>
+                <span id="playerACardPower" class="cardPower"></span>
+            </div>
+            <div id="gameInfo">
+                <div class="playersInfo" id="playersInfo">
+                    <div id="playerA" class="playerInfo">
+                        <span id="playerAName" class="playerName"></span>
+                        <div class="playerHP">
+                            <span class="playerHPText">HP: </span>
+                            <span id="playerAHP" class="playerHPValue"></span>
+                        </div>
+                    </div>
+                    <div id="playerB" class="playerInfo">
+                        <span id="playerBName" class="playerName"></span>
+                        <div class="playerHP">
+                            <span class="playerHPText">HP: </span>
+                            <span id="playerBHP" class="playerHPValue"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="roundInfo" id="roundInfo">
+                    <span class="roundResults">Round Winner: </span>
+                    <span id="roundWinner"></span>
+                </div>
+                <div class="gameActions">
+                    <button id="btAction">Start Game!</button>
+                </div>
+            </div>
+            <div id="plyearBCard" class="card">
+                <span id="playerBCardName" class="cardName"></span>
+                <div class="cardImg">
+                    <img id="playerBCardImg" class="charImg">
+                </div>
+                <div class="bottomLine">
+                    <img class="opLogo" src="https://e7.pngegg.com/pngimages/909/655/png-clipart-one-piece-logo-monkey-d-luffy-one-piece-usopp-logo-pirate-hat-manga-jolly-roger.png">
+                </div>
+                <span id="playerBCardPower" class="cardPower"></span>
+            </div>
+        </div>
+
+        <script src="main.js"></script>
+    </body>
+</html>

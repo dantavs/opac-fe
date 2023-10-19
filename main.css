@@ -1,35 +1,74 @@
 .title {
-    width: 100%;
+    font-size: 2rem;
+    font-weight: bold;
     text-align: center;
+    width: 600px;
+    background-color: gray;
 }
 
-#gamepad{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.card {
+.gamePad {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 400px;
-    height: 600px;
-    background-color: rgb(21,2,93);
-    border: 12px;
-    border-color: rgb(224, 168, 64);
-    border-style:solid;
-    border-radius: 8px;
+    width: 600px;
+    height: 90%;
+    background-color: darkgray;
 }
 
-.cardName {
-    margin: 0 auto;
-    margin-top: 2rem;
+.playerPad {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    border: solid 2px;
+}
+
+.playerHand {
+    display: flex;
+    flex-direction: row;
+    height: 40%;
     width: 100%;
-    text-align: center;
+    background-color: aquamarine;
+}
+
+.playerActiveCard {
+    height: 40%;
+    width: 100%;
+    background-color:aqua;
+}
+
+.playerCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 85%;
+    width: 17%;
+    margin: 6px auto;
+    background-color: white;
+    border: solid 6px;
+    border-radius: 4px;
+}
+
+.faceCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 85%;
+    width: 17%;
+    margin: 6px auto;
+    background-color: rgb(1, 1, 125);
+    border: solid 6px rgb(207, 136, 2);
+    border-radius: 4px;
     color: white;
-    font-size: 3rem;
-    font-weight: bold;
+    text-align: center;
+}
+
+.playerInfo {
+    height: 20%;
+    background-color: cadetblue;
+}
+
+.turnedCardImg {
+    max-width: 80%;
+    margin: 0 auto;
 }
 
 .cardImg {
@@ -37,65 +76,25 @@
     flex-direction: column;
     justify-content: center;
     width: 90%;
-    margin: 2rem auto;
-    height: 400px;
+    height: 60%;
     background-color: white;
+    color: black;
+    margin: 0 auto
+}
+
+.playerInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 2rem;
 }
 
 .charImg {
-    max-height: 250px;
+    max-width: 80%;
     margin: 0 auto;
 }
 
-.cardPower {
-    text-align: right;
-    font-size: 2rem;
-    color: rgb(224, 168, 64);;
-}
-
-.opLogo {
-    width: 50px;
-    margin-left: 1.3rem;
-}
-
-.opImg {
-    width: 100%;
-}
-
-.bottomLine {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-#gameInfo {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 200px;
-    background-color: white;
-}
-
-.playersInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 8px;
-}
-
-.roundInfo {
-    display: flex;
-    flex-direction: column;
-}
-
-.gameActions {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-#gameData {
+#playerBCardsBuffer {
     display: none;
 }
