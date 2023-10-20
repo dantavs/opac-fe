@@ -140,9 +140,7 @@ async function getGameData(gameName){
     const request = await fetch(url,{method:"GET"})
     
     const gameInfo = await request.json()
-    alert('Carta virada: ' + JSON.stringify(gameInfo.cardback))
     turnedCard = `<img class="turnedCardImg" src=${gameInfo.cardback}>`
-    //turnedCard = `<img class="turnedCardImg" src="https://1757140519.rsc.cdn77.org/blog/wp-content/uploads/2022/07/One-Piece-Symbol.png">`
 
     for (let i=0;i<cardsIds.length;i++){
         document.getElementById(cardsIds[i]).innerHTML = turnedCard    
