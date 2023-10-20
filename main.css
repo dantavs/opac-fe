@@ -2,16 +2,18 @@
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
-    width: 600px;
+    width: 100%;
     background-color: gray;
+    margin: 0 auto;
 }
 
 .gamePad {
     display: flex;
     flex-direction: column;
-    width: 600px;
-    height: 90%;
+    width: 100%;
+    height: 95%;
     background-color: darkgray;
+    margin: 0 auto;
 }
 
 .playerPad {
@@ -97,4 +99,10 @@
 
 #playerBCardsBuffer {
     display: none;
+}
+
+@media (max-height: 1100px) {
+    .gamePad {
+        width: 600px;
+    }    
 }
