@@ -32,9 +32,12 @@
 }
 
 .playerActiveCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     height: 40%;
     width: 100%;
-    background-color:aqua;
+    background-color:black;
 }
 
 .playerCard {
@@ -45,8 +48,16 @@
     width: 17%;
     margin: 6px auto;
     background-color: white;
-    border: solid 6px;
+    border: solid 6px rgb(152, 4, 4);
     border-radius: 4px;
+}
+
+.playerActiveGaps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 41.5%;
+
 }
 
 .faceCard {
@@ -105,4 +116,11 @@
     .gamePad {
         width: 600px;
     }    
+}
+
+.roundResult {
+    color: lime;
+    font-size: 2rem;
+    margin-left: 1rem;
+    font-weight: bold;
 }

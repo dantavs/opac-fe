@@ -1,5 +1,4 @@
-const turnedCard = 
-`<img class="turnedCardImg" src="https://1757140519.rsc.cdn77.org/blog/wp-content/uploads/2022/07/One-Piece-Symbol.png">`
+var turnedCard = "a" 
 
 const cardsIds = [
     "playerAActiveCard"
@@ -32,14 +31,6 @@ function setEnvironment(){
     return apiHost
 }
 
-for (let i=0;i<cardsIds.length;i++){
-    document.getElementById(cardsIds[i]).innerHTML = turnedCard    
-}
-
-function cardClick(){
-    alert('Card')
-}
-
 function checkRoundResult(power){
     const cards = JSON.parse(document.getElementById("playerBCardsBuffer").innerHTML)
     const randomCard = Math.floor(Math.random() * cards.length)
@@ -59,6 +50,10 @@ function checkRoundResult(power){
         document.getElementById("playerBHPValue").innerHTML = hp
         document.getElementById("playerBHPValue").style.color = "red"
         document.getElementById("playerAHPValue").style.color = "black"
+        document.getElementById('playerARoundResult').innerHTML = "Winner"
+        document.getElementById('playerARoundResult').style.color = "lime"
+        document.getElementById('playerBRoundResult').innerHTML = "Loser"
+        document.getElementById('playerBRoundResult').style.color = "red"
         winner = "Player A"
     }else{
     if ((cards[randomCard].power >= power) ||(cards[randomCard].power === 1000 && power ===5000)){
@@ -66,18 +61,27 @@ function checkRoundResult(power){
         document.getElementById("playerAHPValue").innerHTML = hp
         document.getElementById("playerAHPValue").style.color = "red"
         document.getElementById("playerBHPValue").style.color = "black"
+        document.getElementById('playerBRoundResult').innerHTML = "Winner"
+        document.getElementById('playerBRoundResult').style.color = "lime"
+        document.getElementById('playerARoundResult').innerHTML = "Loser"
+        document.getElementById('playerARoundResult').style.color = "red"
         winner = "Player B"
     }else{
         hp = parseInt(document.getElementById("playerBHPValue").innerHTML) - 1
         document.getElementById("playerBHPValue").innerHTML = hp
         document.getElementById("playerBHPValue").style.color = "red"
         document.getElementById("playerAHPValue").style.color = "black"
+        document.getElementById('playerARoundResult').innerHTML = "Winner"
+        document.getElementById('playerARoundResult').style.color = "lime"
+        document.getElementById('playerBRoundResult').innerHTML = "Loser"
+        document.getElementById('playerBRoundResult').style.color = "red"
         winner = "Player A"
     }}
 
     if (hp === 0){
         alert (winner + ' won!')
-        btAction.style.display = "block"
+        btOPG.style.display = "block"
+        btJKG.style.display = "block"
         window.location.reload()
     }
     
@@ -124,21 +128,42 @@ function buildHand(gameData){
     }
 }
 
-async function getGameData(){
+async function getGameData(gameName){
     const apiHost = setEnvironment()
-    
-    const url = apiHost + "/onePieceGame"
-    const request = await fetch(url,{method:"GET"})
+    var url=""
 
+    if (gameName === "JKG"){
+        url = apiHost + "/jujutsuKaisenGame"
+    }else{
+        url = apiHost + "/onePieceGame"
+    }
+    const request = await fetch(url,{method:"GET"})
+    
     const gameInfo = await request.json()
+    alert('Carta virada: ' + JSON.stringify(gameInfo.cardback))
+    turnedCard = `<img class="turnedCardImg" src=${gameInfo.cardback}>`
+    //turnedCard = `<img class="turnedCardImg" src="https://1757140519.rsc.cdn77.org/blog/wp-content/uploads/2022/07/One-Piece-Symbol.png">`
+
+    for (let i=0;i<cardsIds.length;i++){
+        document.getElementById(cardsIds[i]).innerHTML = turnedCard    
+    }
 
     return gameInfo
 }
 
-const btAction = document.getElementById("btAction")
+const btOPG = document.getElementById("btOPG")
+const btJKG = document.getElementById("btJKG")
 
-btAction.onclick = async function () {
-    const gameData = await getGameData()
+btOPG.onclick = async function () {
+    const gameData = await getGameData("OPG")
     buildHand(gameData)
-    btAction.style.display = "none"
+    btOPG.style.display = "none"
+    btJKG.style.display = "none"
+}
+
+btJKG.onclick = async function () {
+    const gameData = await getGameData("JKG")
+    buildHand(gameData)
+    btOPG.style.display = "none"
+    btJKG.style.display = "none"
 }
