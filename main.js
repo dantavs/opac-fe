@@ -54,7 +54,14 @@ function checkRoundResult(power){
     `
     
     let hp, winner
-    if (cards[randomCard].power >= power){
+    if(cards[randomCard].power === 5000 && power ===1000){
+        hp = parseInt(document.getElementById("playerBHPValue").innerHTML) - 1
+        document.getElementById("playerBHPValue").innerHTML = hp
+        document.getElementById("playerBHPValue").style.color = "red"
+        document.getElementById("playerAHPValue").style.color = "black"
+        winner = "Player A"
+    }else{
+    if ((cards[randomCard].power >= power) ||(cards[randomCard].power === 1000 && power ===5000)){
         hp = parseInt(document.getElementById("playerAHPValue").innerHTML) - 1
         document.getElementById("playerAHPValue").innerHTML = hp
         document.getElementById("playerAHPValue").style.color = "red"
@@ -66,7 +73,7 @@ function checkRoundResult(power){
         document.getElementById("playerBHPValue").style.color = "red"
         document.getElementById("playerAHPValue").style.color = "black"
         winner = "Player A"
-    }
+    }}
 
     if (hp === 0){
         alert (winner + ' won!')
