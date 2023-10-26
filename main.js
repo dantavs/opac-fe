@@ -90,6 +90,56 @@ function checkRoundResult(power){
         document.getElementById("playerBCardsBuffer").innerHTML = JSON.stringify(cards)
 }
 
+async function handleNextRound(gameId, playedCardId){
+    const apiHost = setEnvironment()
+    var url= apiHost + "/OPGNextRound"
+   
+    const data = {  'gameId': gameId, 'cardId': playedCardId }
+
+    const request = await fetch(url,{
+        method:'POST'
+        ,body: JSON.stringify(data) 
+    }) 
+
+    const gameData = await request.json()
+
+    const playerBActiveCard = document.getElementById("playerBActiveCard")
+    
+    playerBActiveCard.className = "faceCard"
+    playerBActiveCard.innerHTML = 
+    `<div>${gameData.playerB.card.name}</div>
+    <div class="cardImg"><img class="charImg" src=${gameData.playerB.card.img}></div>
+    <div id="playerBActiveCardPower">${gameData.playerB.card.power}</div>
+    `
+    
+    if (gameData.winner === gameData.playerB.name){
+        document.getElementById("playerAHPValue").innerHTML = gameData.playerA.hp
+        document.getElementById("playerAHPValue").style.color = "red"
+        document.getElementById("playerBHPValue").style.color = "black"
+        document.getElementById('playerBRoundResult').innerHTML = "Winner"
+        document.getElementById('playerBRoundResult').style.color = "lime"
+        document.getElementById('playerARoundResult').innerHTML = "Loser"
+        document.getElementById('playerARoundResult').style.color = "red"
+    }else{
+        document.getElementById("playerBHPValue").innerHTML = gameData.playerB.hp
+        document.getElementById("playerBHPValue").style.color = "red"
+        document.getElementById("playerAHPValue").style.color = "black"
+        document.getElementById('playerARoundResult').innerHTML = "Winner"
+        document.getElementById('playerARoundResult').style.color = "lime"
+        document.getElementById('playerBRoundResult').innerHTML = "Loser"
+        document.getElementById('playerBRoundResult').style.color = "red"
+    }
+
+    if (gameData.status === "gameOver"){
+        alert (gameData.winner + ' won!')
+        btOPG.style.display = "block"
+        btJKG.style.display = "block"
+        window.location.reload()
+    }
+
+    return true
+}
+
 function buildHand(gameData){
     const playerHandCards = [
         "playerAHandCard1"
@@ -102,26 +152,27 @@ function buildHand(gameData){
     document.getElementById("playerBCardsBuffer").innerHTML = JSON.stringify(gameData.deck.cards)
 
     for (let i=0;i<playerHandCards.length;i++){
-
-        
         const card = document.getElementById(playerHandCards[i]) 
         card.className = "faceCard"
         card.innerHTML = 
-        `<div>${gameData.deck.cards[i].name}</div>
-        <div class="cardImg"><img class="charImg" src=${gameData.deck.cards[i].img}></div>
-        <div id="playerAActiveCardPower">${gameData.deck.cards[i].power}</div>
+        `<div>${gameData.playerA.deck[i].name}</div>
+        <div class="cardImg"><img class="charImg" src=${gameData.playerA.deck[i].img}></div>
+        <div id="playerAActiveCardPower">${gameData.playerA.deck[i].power}</div>
+        <span class="cardId" id="playerAActiveCardId">${gameData.playerA.deck[i].cardPlayerId}</span>
         `
-        
-        card.onclick = function () {
+
+        card.onclick = async function () {
             document.getElementById("playerAActiveCard").className = "faceCard"
             document.getElementById("playerAActiveCard").innerHTML = document.getElementById(playerHandCards[i]).innerHTML
             
             document.getElementById(playerHandCards[i]).className = "playerCard"
             document.getElementById(playerHandCards[i]).innerHTML = turnedCard
             
-            const cardPower = parseInt(document.getElementById("playerAActiveCardPower").innerHTML)
+            const cardId = document.getElementById("playerAActiveCardId").innerHTML
 
-            checkRoundResult(cardPower)
+            await handleNextRound(gameData.id, cardId)
+            
+            //checkRoundResult(cardPower)
 
             card.onclick = ""
         } 
