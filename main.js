@@ -221,7 +221,6 @@ const startGameOP = document.getElementById("startGameOP")
 const startGameJK = document.getElementById("startGameJK")
 
 startGameOP.onclick = async function () {
-    alert('OPG')
     const gameData = await getGameData("OPG")
     buildHand(gameData)
     btOPG.style.display = "none"
