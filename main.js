@@ -162,6 +162,8 @@ function buildHand(gameData){
         `
 
         card.onclick = async function () {
+            card.onclick = ""
+
             document.getElementById("playerAActiveCard").className = "faceCard"
             document.getElementById("playerAActiveCard").innerHTML = document.getElementById(playerHandCards[i]).innerHTML
             
@@ -172,9 +174,6 @@ function buildHand(gameData){
 
             await handleNextRound(gameData.id, cardId)
             
-            //checkRoundResult(cardPower)
-
-            card.onclick = ""
         } 
     }
 }
@@ -215,4 +214,27 @@ btJKG.onclick = async function () {
     buildHand(gameData)
     btOPG.style.display = "none"
     btJKG.style.display = "none"
+}
+
+
+const startGameOP = document.getElementById("startGameOP")
+const startGameJK = document.getElementById("startGameJK")
+
+startGameOP.onclick = async function () {
+    alert('OPG')
+    const gameData = await getGameData("OPG")
+    buildHand(gameData)
+    btOPG.style.display = "none"
+    btJKG.style.display = "none"
+    document.getElementById("gamePad").style.display = "flex"
+    document.getElementById("gameStart").style.display = "none"
+}
+
+startGameJK.onclick = async function () {
+    const gameData = await getGameData("JKG")
+    buildHand(gameData)
+    btOPG.style.display = "none"
+    btJKG.style.display = "none"
+    document.getElementById("gamePad").style.display = "flex"
+    document.getElementById("gameStart").style.display = "none"
 }
