@@ -1,4 +1,38 @@
-var turnedCard = "a" 
+function allowDrop(ev){
+    ev.preventDefault()
+}
+
+function cardDrag(ev){
+    ev.dataTransfer.setData("text", ev.target.id)
+}
+
+async function callHandleNextRound(gameId, cardId){
+    await handleNextRound(gameId, cardId)
+}
+
+function cardDrop(ev){
+    ev.preventDefault()
+
+    var data = ev.dataTransfer.getData("text")
+
+    const playerAActiveCard =  document.getElementById('playerAActiveCard')
+    const playedCard = document.getElementById(data)
+
+    
+    playerAActiveCard.innerHTML = ""
+    playerAActiveCard.className = "faceCard"
+    playerAActiveCard.innerHTML = playedCard.innerHTML
+
+    playedCard.className = "playerCard"
+    playedCard.innerHTML = turnedCard
+    
+    const cardId =  document.getElementById("playerAActiveCardId").innerHTML
+    
+    callHandleNextRound(gameId, cardId)
+
+}
+
+var turnedCard, gameId 
 
 const cardsIds = [
     "playerAActiveCard"
@@ -196,6 +230,8 @@ async function getGameData(gameName){
         document.getElementById(cardsIds[i]).innerHTML = turnedCard    
     }
 
+    gameId = gameInfo.id
+
     return gameInfo
 }
 
@@ -221,19 +257,19 @@ const startGameOP = document.getElementById("startGameOP")
 const startGameJK = document.getElementById("startGameJK")
 
 startGameOP.onclick = async function () {
-    const gameData = await getGameData("OPG")
-    buildHand(gameData)
-    btOPG.style.display = "none"
-    btJKG.style.display = "none"
     document.getElementById("gamePad").style.display = "flex"
     document.getElementById("gameStart").style.display = "none"
+    btOPG.style.display = "none"
+    btJKG.style.display = "none"
+    const gameData = await getGameData("OPG")
+    buildHand(gameData)
 }
 
 startGameJK.onclick = async function () {
-    const gameData = await getGameData("JKG")
-    buildHand(gameData)
+    document.getElementById("gameStart").style.display = "none"
+    document.getElementById("gamePad").style.display = "flex"
     btOPG.style.display = "none"
     btJKG.style.display = "none"
-    document.getElementById("gamePad").style.display = "flex"
-    document.getElementById("gameStart").style.display = "none"
+    const gameData = await getGameData("JKG")
+    buildHand(gameData)
 }
